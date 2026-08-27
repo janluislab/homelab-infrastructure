@@ -24,7 +24,7 @@ The project also documents real infrastructure incidents encountered during migr
 ---
 
 # 🏗️ Architecture
-
+![Homelab Infrastructure Architecture](architecture/infrastructure-diagram.jpg)
 ```text
                          INTERNET
                             │
