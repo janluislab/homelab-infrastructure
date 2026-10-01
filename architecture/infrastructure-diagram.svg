@@ -31,7 +31,7 @@
 <rect x="355" y="551" width="259" height="123" rx="14" fill="#142439" stroke="#2d405b" stroke-width="1.5"/>
 <text x="374" y="582" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" fill="#f6ad65" font-weight="700" text-anchor="start">CT102</text>
 <text x="374" y="612" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" fill="#e9eff8" font-weight="600" text-anchor="start">Homepage / operations</text>
-<text x="374" y="641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#a3b4c9" font-weight="400" text-anchor="start">Later lab extension</text>
+<text x="374" y="641" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#a3b4c9" font-weight="400" text-anchor="start">Python updater · systemd</text>
 <text x="766" y="289" font-family="DejaVu Sans, Arial, sans-serif" font-size="14" fill="#61c8ed" font-weight="700" text-anchor="start">STORAGE NODE</text>
 <text x="766" y="326" font-family="DejaVu Sans, Arial, sans-serif" font-size="27" fill="#e9eff8" font-weight="700" text-anchor="start">Lenovo IdeaPad Y700</text>
 <text x="766" y="354" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" fill="#a3b4c9" font-weight="400" text-anchor="start">TrueNAS  ·  ZFS / NFS / SMB</text>
@@ -50,7 +50,7 @@
 <rect x="80" y="801" width="330" height="112" rx="14" fill="#1a2b43" stroke="#2d405b" stroke-width="1.5"/>
 <text x="100" y="837" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" fill="#e9eff8" font-weight="600" text-anchor="start">Original migration data</text>
 <text x="100" y="868" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" fill="#a3b4c9" font-weight="400" text-anchor="start">Photos · documents · app data</text>
-<text x="100" y="892" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" fill="#a3b4c9" font-weight="400" text-anchor="start">Approximately 525 GB migrated</text>
+<text x="100" y="892" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" fill="#a3b4c9" font-weight="400" text-anchor="start">Source drive: ~526 GB used</text>
 <rect x="472" y="801" width="385" height="112" rx="14" fill="#252641" stroke="#61537e" stroke-width="1.5"/>
 <text x="492" y="837" font-family="DejaVu Sans, Arial, sans-serif" font-size="20" fill="#e9eff8" font-weight="600" text-anchor="start">Two local Restic repositories</text>
 <text x="492" y="868" font-family="DejaVu Sans, Arial, sans-serif" font-size="16" fill="#cfbff0" font-weight="400" text-anchor="start">Encrypted · deduplicated</text>

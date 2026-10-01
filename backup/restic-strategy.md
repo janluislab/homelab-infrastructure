@@ -4,7 +4,7 @@
 
 ## Implemented during the migration
 
-The source data was protected with two encrypted, deduplicated Restic repositories on separate local storage devices. Approximately 525 GB of existing data was involved in the migration.
+The source data was protected with two encrypted, deduplicated Restic repositories on separate local storage devices. Preparation recorded roughly 526 GB total source-drive usage, a 38.24 GB Immich library inventory, and a separate 38.244 GiB test restore. These are different measurement scopes; see [migration preparation](../documentation/migration-preparation.md).
 
 | Copy | Role | Recorded validation |
 |---|---|---|
@@ -18,7 +18,7 @@ The second repository was populated with Restic's repository-copy operation rath
 
 A normal `restic check` validates repository structure and consistency. It does **not** reread every stored data pack. A full data read requires `restic check --read-data`; a subset check gives narrower coverage.
 
-The build record confirms checks and restores, but does not preserve evidence of a full `--read-data` pass over both repositories. The later storage investigation recorded a successful repository check, a 38.244 GiB test restore comprising 37,929 files/directories, and three sample files whose SHA-256 hashes matched the restored backup copies.
+The build record confirms checks and restores, but does not preserve evidence of a full `--read-data` pass over both repositories. The later storage investigation recorded a successful repository check, a 38.244 GiB test restore comprising approximately 37.9 thousand files/directories, and three sample files whose SHA-256 hashes matched the restored backup copies.
 
 Those are useful recovery observations. They are not a claim that every source file was exhaustively compared or that either backup device is immune to failure.
 
@@ -45,6 +45,8 @@ Choose a specific snapshot, compare selected restored files with their originals
 ## Application recovery requirements
 
 Immich has two separate recovery concerns: media on TrueNAS and PostgreSQL on local container storage. A copy of the media library alone cannot restore the full application state.
+
+A manual logical PostgreSQL backup was produced during the original preparation and recorded at 56,789,824 bytes. This backup-file record is separate from a demonstrated restore of that exact SQL dump. See [database preparation](../documentation/migration-preparation.md).
 
 For future scheduled protection, pair media backups with a supported, application-consistent PostgreSQL backup and the required private application configuration. Do not assume that copying a running database directory produces a consistent database backup. Automated schedules, retention, recovery-time targets, and offsite delivery are not demonstrated by this repository yet.
 

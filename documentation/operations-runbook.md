@@ -71,6 +71,6 @@ A healthy container is one check. Also open the application, verify media playba
 
 ## Backups and change records
 
-Before a planned application update, verify a usable recovery copy of media, an application-consistent database backup, and the private configuration. Record the previous version, change, result, and recovery method. The project's updater completed successfully on October 1, 2026, but this repository does not publish its implementation or claim an automatic pre-update backup.
+Before a planned application update, verify a usable recovery copy of media, an application-consistent database backup, and the private configuration. Record the previous version, change, result, and recovery method. The project's updater completed successfully on October 1, 2026. Its deployed service, paths, restricted execution, locking, and validation flow are recorded in the [operations-node page](../proxmox/operations-node.md); an automatic pre-update backup is not demonstrated.
 
-Use the [Restic guide](../backup/restic-strategy.md) for repository and test-restore checks. Keep full logs private, and publish only a sanitized, dated validation summary.
+Use the [Restic guide](../backup/restic-strategy.md) for repository and test-restore checks. Keep full logs private, and publish a sanitized, dated validation summary. Update [current deployment](current-state.md) and [change history](../CHANGELOG.md) after a verified change; the [documentation workflow](documentation-workflow.md) lists the record fields.

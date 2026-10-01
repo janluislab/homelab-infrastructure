@@ -28,9 +28,11 @@ The [NFS incident report](../documentation/incident-postmortems/nfs-permissions.
 
 During the August 27, 2026 investigation, recorded results included SMART passing with zero reallocated, pending, uncorrectable, and interface CRC counts; a clean later scrub; and three sample file hashes matching copies restored from Restic.
 
-A later investigation recorded another storage interruption and metadata errors. The available record does not establish the exact hardware cause or retain final storage repair steps for that recurrence. Application service was subsequently restored and confirmed working.
+A later August interruption included metadata errors. A subsequent **September 28, 2026** status recorded `tank` ONLINE, READ/WRITE/CKSUM counters at zero, and no known data errors. It displayed a completed **September 13** scrub: 0B repaired, zero errors, duration 01:14:22. The dataset `tank/restored` was mounted at `/mnt/tank/restored`, with 133G used.
 
-The [storage incident report](../documentation/incident-postmortems/truenas-storage-hdd.md) keeps these episodes separate rather than treating one earlier clean result as proof of continuing storage health.
+This later result documents the clean recovery state. The exact physical cause and intermediate repair action are still not established by the retained record.
+
+The [storage incident report](../documentation/incident-postmortems/truenas-storage-hdd.md) and [validation record](../evidence/validation-record.md) preserve both the original error observations and the later clean checkpoint.
 
 ## Accepted lab constraints
 

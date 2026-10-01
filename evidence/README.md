@@ -10,7 +10,8 @@ Evidence is grouped by what it can establish. Screenshots show an August 2026 co
 | [CT100 resources](proxmox/lxc-immich-resources.png) | 6 GiB RAM; 2 GiB swap; 1 core; 28 GB local root disk; NFS bind-mount paths | Complete Docker volume configuration or database integrity |
 | [CT101 resources](proxmox/llxc-coudflare-resources.png) | Separate Cloudflare container; 512 MiB RAM/swap; 1 core; 8 GB root disk | Tunnel authorization or external route availability |
 | [Proxmox storage](proxmox/storage.png) | `immich-nfs` mounted at `/mnt/pve/immich-nfs`; local storage object present | Every listed content type being used or NAS data integrity |
-| [Validation record](validation-record.md) | Reported Restic, SMART, ZFS, file-hash, and application checks | An exhaustive file comparison or a live audit |
+| [Validation record](validation-record.md) | Dated backup preparation, Restic/SMART/hash checks, September 28 clean ZFS status, and later updater/application verification | An exhaustive file comparison or a new live audit |
+| [Operations-node record](../proxmox/operations-node.md) | Installed service/path, permitted restricted SSH update, locking in script, API health result | Independent rejection, concurrency, or firewall tests |
 
 ## Proxmox deployment
 

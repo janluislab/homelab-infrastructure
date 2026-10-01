@@ -10,7 +10,9 @@ This report records the verified application outcome. It does not assign one unp
 
 ## Recorded recovery and verification
 
-On October 1, 2026, the existing update workflow pulled release images, recreated relevant services, and reported application health. The subsequent validation command was:
+On September 30, the enabled/running `homelab-immich-updater` service was recorded in CT102 using Python and `/opt/homelab/ops/app.py`. The restricted SSH update path ran successfully, and locking logic was present in `/usr/local/sbin/immich-update`.
+
+On October 1, 2026, that manual workflow pulled release images, recreated relevant services, waited for the API, and completed with application health confirmed. See the [operations-node implementation record](../../proxmox/operations-node.md). The subsequent validation command was:
 
 ```bash
 pct exec 100 -- docker compose -f /opt/immich/docker-compose.yml ps
@@ -29,13 +31,13 @@ The owner confirmed afterward that everything was working. Redis is described as
 
 ## Credential follow-up
 
-An earlier application/update secret had been disclosed during configuration troubleshooting. The secret was regenerated, followed by a recorded restart of Homepage in CT102 and confirmation that the result was good.
+The **Proxmox API credential used by Homepage** was regenerated, followed by a recorded restart of Homepage in CT102 and confirmation that its Proxmox integration worked.
 
-The portfolio excludes the secret value and earlier secret-bearing configuration. It does not claim that all credentials across the lab were rotated.
+This is the confirmed rotation. Completion of the other service-key rotations was not recorded. Credential values and private configuration remain excluded.
 
 ## Boundaries and lesson
 
-No final tunnel route test or complete storage repair transcript accompanies the final application output, so neither is invented here. Container health, user-visible functionality, remote-route health, and full-pool integrity are separate observations.
+The later September 28 storage output separately recorded a clean pool state. An external Cloudflare route test and the precise storage-repair sequence are not retained. Container health, user-visible functionality, remote-route health, and pool integrity are tracked as separate observations.
 
 Recover dependencies first, verify the local application, then verify access/dashboard integrations. Use a dated result for each layer instead of relying on a single successful page load.
 

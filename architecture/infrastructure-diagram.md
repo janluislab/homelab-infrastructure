@@ -49,4 +49,6 @@ Physical role separation is not VLAN segmentation or a firewall boundary. The si
 
 The original `infrastructure-diagram.jpg` is retained as a historical illustration. The SVG and dependency diagram on this page are the maintained architecture reference.
 
-See the [operations runbook](../documentation/operations-runbook.md) for verification order and the [security record](../security/controls-and-limitations.md) for access-control work.
+CT102 also runs the Python/systemd operations service. It connects by restricted SSH to `pve`, where the forced update command invokes CT100's Compose workflow through `pct exec 100`, then checks application API health. The permitted path was tested; implementation/validation details are in the [operations-node record](../proxmox/operations-node.md).
+
+See the [current deployment](../documentation/current-state.md), [operations runbook](../documentation/operations-runbook.md), and [security record](../security/controls-and-limitations.md).

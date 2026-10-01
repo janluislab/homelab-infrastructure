@@ -16,7 +16,7 @@ The initial status reported **3,878 data errors**. The error-path list was then 
 |---|---|
 | SMART | Overall assessment passed; reallocated, pending, uncorrectable, and interface CRC counts were zero |
 | Restic check | Repository check completed without reported errors |
-| Separate restore | 38.244 GiB, comprising 37,929 files/directories |
+| Separate restore | 38.244 GiB, comprising approximately 37.9 thousand files/directories |
 | Sample comparison | Three flagged JPG/MP4 files had matching SHA-256 hashes against their restored backup copies |
 | Later scrub/status | `tank` ONLINE; READ/WRITE/CKSUM counters zero; 0B repaired; scrub completed with zero errors; no known data errors in that captured result |
 
@@ -28,13 +28,23 @@ Independent restored copies and sample hashes gave a way to check selected conte
 
 A passing SMART assessment is not proof that a drive, enclosure, power supply, or connection is fault-free. None of those components is identified as a confirmed cause in this report.
 
-## Later recurrence and recovery boundary
+## Later recurrence and clean recovery checkpoint
 
 A later August 31 record included a suspended-pool observation, followed by an ONLINE pool with a scrub in progress, 5,216 data errors, and permanent-error metadata entries. This is a separate observation from the earlier clean scrub.
 
-The exact final storage intervention and final full-pool result for that recurrence are not retained in the evidence reviewed here. The owner later reported the system working, and October 1 Compose output confirmed Immich server, database, and machine-learning health with Redis running.
+The later **September 28** status provided the clean storage checkpoint missing from the earlier summary:
 
-Application recovery is documented in [its own report](application-recovery.md). It is not presented as proof that every ZFS error had been independently rechecked.
+| Check | Later recorded result |
+|---|---|
+| Pool | `tank` ONLINE |
+| Device counters | READ/WRITE/CKSUM: 0/0/0 |
+| Permanent-error section | No known data errors |
+| Completed scrub shown in status | September 13, 2026; 0B repaired; zero errors; 01:14:22 |
+| Restored dataset | `tank/restored`, mounted `/mnt/tank/restored`, 133G used |
+
+The status was **read on September 28**; the scrub itself completed on September 13. The pool later reported a clean state, while the exact physical cause and intermediate repair actions remain unconfirmed.
+
+On October 1, application/container health and user-visible functionality were also confirmed. See [application recovery](application-recovery.md) for that separate validation.
 
 ## Lessons and follow-up
 
