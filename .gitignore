@@ -1,0 +1,23 @@
+# Credentials and private configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+credentials.json
+secrets.*
+private/
+
+# Application data and database exports
+*.dump
+*.backup
+*.sql
+data/
+uploads/
+
+# Local tooling
+.venv/
+__pycache__/
+.DS_Store
