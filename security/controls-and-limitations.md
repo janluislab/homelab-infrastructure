@@ -13,7 +13,10 @@ This lab applies concepts studied for CompTIA Security+. It records implemented 
 | Keep PostgreSQL off NFS and Windows-translated paths | Match storage behavior to database durability needs | Local storage still needs an application-consistent backup |
 | Encrypt Restic repositories | Protect backup contents when repository storage is accessed | Password/key protection and independent recovery copies remain necessary |
 | Separate Cloudflare Tunnel container | Keep tunnel operation separate from the Immich workload | A tunnel alone does not establish authentication policy or least privilege |
-| Rotate a disclosed application/update secret | Replace an exposed credential and verify service afterward | No claim that every historical credential was rotated |
+| Constrain updater SSH execution | Forced-command/no-forwarding configuration limits the intended command path | Permitted update path tested; arbitrary-command rejection tests not recorded |
+| Serialize updater execution | Locking logic present in the update script | Separate concurrent-run/lock-contention test not recorded |
+| Keep operations listener on the home LAN | Python service recorded on a private LAN address at port 8081 | Full firewall/external-exposure audit not recorded; keep it off Cloudflare |
+| Rotate the Proxmox API credential used by Homepage | Replace the credential and check the dashboard integration | This specific rotation was confirmed; all-service rotation not claimed |
 | Exclude private files from version control | Reduce accidental publication of secrets and application data | `.gitignore` is a safeguard, not a secret scanner or access-control mechanism |
 
 ## Known access-control tradeoff
@@ -36,6 +39,8 @@ The hardening target is a dedicated media identity with explicit UID/GID mapping
 
 Store passwords, API keys, Cloudflare credentials, private SSH keys, Restic password files, and real `.env` files outside this repository. Publish sanitized configuration examples only. Review screenshots and terminal captures before adding them to the evidence directory.
 
-An earlier secret was regenerated and the Homepage container restarted; the owner confirmed the result was working. The secret value and its earlier configuration are intentionally absent from this portfolio.
+The Proxmox API credential used by Homepage was regenerated and Homepage restarted; its Proxmox integration was confirmed working. Completion of the remaining service-key rotations was not recorded. Secret values and private configuration are excluded.
+
+See the [operations-node record](../proxmox/operations-node.md) for the updater controls and the tests actually performed.
 
 Related: [NFS incident](../documentation/incident-postmortems/nfs-permissions.md), [backup strategy](../backup/restic-strategy.md), and [operations verification](../documentation/operations-runbook.md).

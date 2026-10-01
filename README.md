@@ -2,9 +2,9 @@
 
 **Janluis Torres · Linux administration, virtualization, storage, and recovery**
 
-I repurposed two Lenovo laptops into a Proxmox compute host and a dedicated TrueNAS storage server, migrated approximately **525 GB** of existing data, and deployed Immich with Docker Compose inside LXC. This portfolio documents the architecture, recovery decisions, and real failures encountered along the way.
+I repurposed two Lenovo laptops into a Proxmox compute host and a dedicated TrueNAS storage server, migrated an existing Immich deployment, and built a dashboard-operated update workflow. This portfolio explains the preparation, design decisions, failures, fixes, and verification behind the working environment.
 
-The strongest part of the project is the troubleshooting: PostgreSQL filesystem errors, a four-layer NFS permission problem, Proxmox outages, resource exhaustion, and ZFS integrity investigations.
+**Start here:** [Guide for employers](documentation/for-employers.md) · [Current deployment](documentation/current-state.md) · [Dated change history](CHANGELOG.md)
 
 ## Architecture
 
@@ -12,39 +12,44 @@ The strongest part of the project is the troubleshooting: PostgreSQL filesystem 
 
 **Storage path:** TrueNAS ZFS dataset → NFS mount on Proxmox → bind mount in the Immich container. **PostgreSQL stays on local Linux/container storage.**
 
-[Architecture and design decisions](architecture/infrastructure-diagram.md) · [Compute node](proxmox/compute-node.md) · [Storage node](truenas/storage-node.md)
+[Architecture and tradeoffs](architecture/infrastructure-diagram.md) · [Compute node](proxmox/compute-node.md) · [Storage node](truenas/storage-node.md) · [Operations node](proxmox/operations-node.md)
 
-## What I built and verified
+## Work and results
 
-| Work | Result | Supporting documentation |
+| Area | Work performed | Recorded result |
 |---|---|---|
-| Virtualization and application hosting | Proxmox with LXC; Immich, PostgreSQL, Redis, and machine learning through Docker Compose | [Compute configuration](proxmox/compute-node.md) |
-| Storage integration | Single-disk ZFS pool with NFS media storage and local application databases | [Storage design](truenas/storage-node.md) |
-| Migration and recovery | Approximately 525 GB migrated; Restic repositories checked and restores tested | [Migration record](documentation/project-overview.md) |
-| Backup engineering | Two encrypted local Restic repositories; repository copying and recovery validation | [Backup and recovery](backup/restic-strategy.md) |
-| Incident investigation | Logs, permission tests, resource graphs, SMART results, scrubs, and sample file hashes used to diagnose failures | [Incident reports](documentation/incident-postmortems/README.md) |
+| Virtualization | Proxmox with separate Immich, Cloudflare, and operations LXC workloads | CT100/CT101 configuration captured; later CT102 service deployment confirmed |
+| Migration preparation | Inventory, PostgreSQL backup, Restic snapshot/checks, and independent test restore | Source library: 22,118 files / 38.24 GB; test restore: 38.244 GiB |
+| Storage integration | TrueNAS/ZFS, NFS mount, LXC bind mount, and permission troubleshooting | NAS-backed media accessible; database remains on local Linux storage |
+| Incident recovery | Investigated filesystem, vector-extension, network, power, resource, and ZFS errors | [12 case studies](documentation/incident-postmortems/README.md) with evidence and bounded conclusions |
+| Operations | Homepage and a Python/systemd Immich updater using restricted SSH | Pull → recreate → API health verification completed successfully on October 1, 2026 |
+| Credential maintenance | Regenerated the Proxmox API token used by Homepage | Dashboard integration checked after container restart |
 
-Cloudflare Tunnel runs in a separate LXC container. A later operations container hosts Homepage and Immich update tooling. On **October 1, 2026**, the recorded Compose output showed the Immich server, PostgreSQL, and machine-learning services healthy, with Redis running; application functionality was confirmed afterward.
+The source drive reported roughly **526 GB used**, while the measured Immich library and test restore were separate, smaller datasets. [Preparation and measurement details](documentation/migration-preparation.md) explain the scope of each figure.
 
-## Start with these case studies
+## Latest verification
+
+- **Storage, September 28:** `tank` ONLINE; READ/WRITE/CKSUM counters zero; no known data errors. The displayed completed scrub was dated September 13 and reported zero errors.
+- **Application, October 1:** Immich server, PostgreSQL, and machine learning healthy; Redis running. Application functionality confirmed afterward.
+- **Operations, September 30–October 1:** updater service active/enabled; successful controlled update; Proxmox credential regenerated and Homepage integration confirmed.
+
+[Detailed validation record](evidence/validation-record.md) · [Screenshots](evidence/README.md) · [Recovery runbook](documentation/operations-runbook.md)
+
+## Selected case studies
 
 - [NFS permissions across TrueNAS, Proxmox, and unprivileged LXC](documentation/incident-postmortems/nfs-permissions.md)
-- [ZFS/HDD investigation and recovery evidence](documentation/incident-postmortems/truenas-storage-hdd.md)
+- [ZFS/HDD investigation with later clean storage validation](documentation/incident-postmortems/truenas-storage-hdd.md)
+- [Immich vector-extension and PostgreSQL image compatibility](documentation/incident-postmortems/immich-vector-extension.md)
 - [PostgreSQL filesystem incident during migration](documentation/incident-postmortems/postgresql-corruption.md)
-- [Proxmox network lockout and reboot recovery](documentation/incident-postmortems/proxmox-network-lockout.md)
 
-[All incident reports](documentation/incident-postmortems/README.md) · [Screenshots and validation evidence](evidence/README.md) · [Operations runbook](documentation/operations-runbook.md)
+[All incident reports](documentation/incident-postmortems/README.md) · [Backup and recovery](backup/restic-strategy.md)
 
-## Security and project boundaries
+## Security and roadmap
 
-This is a personal lab applying concepts studied for **CompTIA Security+**. Compute/storage separation, encrypted backups, container identity mapping, and credential rotation are documented alongside their limitations.
+This personal lab applies concepts studied for **CompTIA Security+**. Implemented controls and their tradeoffs are documented: encrypted backups, container identity mapping, restricted updater execution, service separation, and credential rotation.
 
-The storage pool has one data disk; the two hosts do not provide high availability. A broad dataset ACL was used to resolve a lab permission issue and remains a hardening item. The Restic copies are local, so **offsite protection is still planned**.
+The pool has one data disk; the hosts do not provide high availability. A broad dataset ACL used during recovery remains a hardening item, and the backup repositories are local. [Security controls and limitations](security/controls-and-limitations.md)
 
-[Security controls and limitations](security/controls-and-limitations.md)
+Nextcloud migration to the new platform, VLAN segmentation, OPNsense, WireGuard, centralized logging/SIEM, vulnerability scanning, and offsite backup are **planned**. Nextcloud existed in the earlier Windows environment; deployment on the new platform is not claimed.
 
-## Next steps
-
-Nextcloud, VLAN segmentation, OPNsense, WireGuard, centralized logging/SIEM, vulnerability scanning, and an offsite backup destination are **planned**. They are not presented as deployed services.
-
-[Project overview and roadmap](documentation/project-overview.md)
+[Project history and roadmap](documentation/project-overview.md) · [How documentation stays current](documentation/documentation-workflow.md)

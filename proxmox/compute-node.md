@@ -20,9 +20,9 @@ The Y540 hosts Proxmox, LXC containers, and application compute. Checked-in scre
 |---|---|---|---|
 | 100 | Immich with Docker Compose, PostgreSQL, Redis, and machine learning | 1 CPU core; 6 GiB RAM; 2 GiB swap; 28 GB local root disk | [CT100 resources](../evidence/proxmox/lxc-immich-resources.png) |
 | 101 | Cloudflare Tunnel | 1 CPU core; 512 MiB RAM; 512 MiB swap; 8 GB local root disk | [CT101 resources](../evidence/proxmox/llxc-coudflare-resources.png) |
-| 102 | Operations/Homepage and update tooling | Allocation not captured in the checked-in screenshots | Later troubleshooting record |
+| 102 | Homepage and Python/systemd updater | Allocation not captured in the checked-in screenshots | [Operations-node record](operations-node.md): service deployment, restricted SSH, and successful update |
 
-The first two allocations come directly from the screenshots. CT102 was added later, so it does not appear in the older dashboard image.
+The first two allocations come directly from the screenshots. CT102 was added later, so it does not appear in the older dashboard image. Its enabled `homelab-immich-updater` service and successful manual update are documented in the [operations-node page](operations-node.md).
 
 ## Immich storage
 

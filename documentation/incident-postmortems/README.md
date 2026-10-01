@@ -6,6 +6,7 @@ These reports use the same method: describe the failure, isolate the relevant la
 
 | Incident | Main diagnostic lesson | Recorded outcome |
 |---|---|---|
+| [Immich vector-extension compatibility](immich-vector-extension.md) | Match the application with its supported database image/extensions | Compatible image retained existing data; vector initialization progressed; later application health confirmed |
 | [PostgreSQL filesystem error](postgresql-corruption.md) | Investigate the database storage path before assuming irreversible corruption | Database startup and Immich restored; later deployment uses local Linux database storage |
 | [NFS permission chain](nfs-permissions.md) | Test export mapping, ownership, recursive ACLs, and effective container identity separately | Writes restored; broad ACL remains a hardening gap |
 | [Proxmox network lockout](proxmox-network-lockout.md) | Compare the configured address with the actual LAN | Wrong-subnet static configuration corrected |
@@ -15,7 +16,7 @@ These reports use the same method: describe the failure, isolate the relevant la
 | [Storage-format incompatibility](storage-format-incompatibility.md) | Identify the on-disk format before attempting mounts | Windows Storage Spaces disk identified; compatible source used |
 | [Restore metadata warnings](restore-metadata-warnings.md) | Separate metadata portability from content recovery and skipped objects | Representative content checked; identical Windows metadata not claimed |
 | [External backup-drive errors](external-backup-drive.md) | Software repair does not restore physical drive reliability | Readability recovered for the migration; device reliability remains a limitation |
-| [TrueNAS ZFS/HDD investigation](truenas-storage-hdd.md) | Combine pool status, SMART, independent restore, and file comparisons | Historical clean scrub and sample matches recorded; later storage cause unconfirmed |
-| [Application recovery and credential follow-up](application-recovery.md) | Recover the stack in dependency order and check the application | October 1 Immich health/functionality and later Homepage restart confirmed |
+| [TrueNAS ZFS/HDD investigation](truenas-storage-hdd.md) | Combine pool status, SMART, independent restore, and file comparisons | Later September 28 clean pool status and sample comparisons recorded; physical cause unconfirmed |
+| [Application recovery and credential follow-up](application-recovery.md) | Recover the stack in dependency order and check the application | October 1 updater/API/application verification and Proxmox Homepage credential rotation confirmed |
 
 Evidence comes from owner-supplied build notes, existing repository screenshots, and later terminal results reviewed for this portfolio. See the [validation record](../../evidence/validation-record.md) for dates and the exact scope of the available checks.
