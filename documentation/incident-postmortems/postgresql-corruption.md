@@ -1,59 +1,33 @@
-# Incident Postmortem — PostgreSQL Filesystem Error
+# Incident — PostgreSQL filesystem error during migration
 
-## Severity
+[All incidents](README.md) · [Portfolio](../../README.md)
 
-High
+## Impact and evidence
 
-## Impact
+Immich returned HTTP 500 errors in the earlier Windows/Docker Desktop/WSL2 environment. PostgreSQL reported:
 
-Immich became unavailable and returned HTTP 500 errors.
+```text
+could not open file "global/pg_filenode.map": Invalid argument
+```
 
-PostgreSQL reported:
+The database directory was on a path translated through the Windows/WSL2 filesystem layer. This focused the investigation on storage behavior and the host/VM state, rather than immediately discarding the database.
 
-`could not open file "global/pg_filenode.map": Invalid argument`
+## Investigation and recovery
 
-## Environment
+The recorded sequence was to shut down WSL2, update WSL, reboot the Windows host, and restart the application environment. PostgreSQL completed its startup/crash-recovery process, after which database availability and Immich functionality were verified.
 
-- Windows
-- Docker Desktop
-- WSL2
-- Immich
-- PostgreSQL
+The recovery reused the database. No manual deletion of database files or forced WAL reset is claimed.
 
-## Investigation
+## Cause and confidence
 
-The PostgreSQL database directory was located on a Windows/WSL2-translated filesystem path.
+The working diagnosis was an interaction between the database workload and its Windows-translated storage path/host state. Recovery after the WSL/host reset supports that diagnosis. The retained evidence does not establish a particular Docker or PostgreSQL software defect, nor prove that permanent on-disk database corruption occurred.
 
-Low-level PostgreSQL filesystem operations were failing.
+The filename is retained from the original repository, but the observed failure is described as a **filesystem incident** rather than a conclusively proven database-corruption event.
 
-The investigation focused on the storage layer rather than immediately assuming database corruption.
+## Prevention and lesson
 
-## Recovery
+The migrated deployment keeps PostgreSQL on native local Linux/container storage. TrueNAS/NFS supplies media files separately.
 
-1. Shut down WSL2.
-2. Updated WSL.
-3. Rebooted the Windows host.
-4. Restarted the PostgreSQL environment.
-5. Allowed PostgreSQL crash recovery to complete.
-6. Verified database availability.
-7. Verified Immich functionality.
+Database recovery also needs an application-consistent database backup; a media-library copy alone is insufficient. See the [backup record](../../backup/restic-strategy.md).
 
-## Result
-
-The database recovered successfully and Immich returned to normal operation.
-
-## Root Cause
-
-The database was operating on a Windows/WSL2 filesystem layer that was not appropriate for PostgreSQL's database workload.
-
-## Preventive Action
-
-Databases are now stored on native local Linux/container storage.
-
-Network storage is reserved for appropriate file/media workloads.
-
-## Lessons Learned
-
-Database storage requirements differ from general file storage requirements.
-
-Storage architecture must consider filesystem semantics, locking, durability, and database workload characteristics—not simply available capacity.
+Reference: [Immich system requirements and database storage guidance](https://docs.immich.app/install/requirements/).
